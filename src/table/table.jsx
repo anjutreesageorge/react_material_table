@@ -20,11 +20,11 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return {
-    id, name, calories, fat, carbs, protein,
+/*let id = 0;*/
+function createData(iATA_IDA1,name,wMO_ID,mSC_ID,latitude,longitude,elevation,data_Provider,dataset_N,aUTO_MA,province_Territory) {
+ /* id += 1;*/
+  return { 
+	 iATA_IDA1,name,wMO_ID,mSC_ID,latitude,longitude,elevation,data_Provider,dataset_N,aUTO_MA,province_Territory,
   };
 }
 // TO DO fetch from  api
@@ -38,45 +38,60 @@ function SimpleTable(props) {
     if (!initialized) {
       axios
         .get(
-          'https://gist.githubusercontent.com/witalewski/fc8f043d53a0d505f84c5ddb04ae76ea/raw/7c505bbc1675a0bc8a067f8b633b531c769bb64c/data.json',
+          'http://localhost:8080/demo'
         )
         .then(({ data }) => {
           // eslint-disable-next-line no-console
           console.log('>>>>>>>.', data);
-          setRows([
-            createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-            createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-            createData('Eclair', 262, 16.0, 24, 6.0),
-            createData('Cupcake', 305, 3.7, 67, 4.3),
-            createData('Gingerbread', 356, 16.0, 49, 3.9),
-          ]);
+          data.forEach(element => {
+            setRows([
+              createData(element.iATA_IDA1,element.name,element.wMO_ID,element.mSC_ID,element.latitude,element.longitude,element.elevation,element.data_Provider,
+                element.dataset_N,element.aUTO_MA,element.province_Territory)
+              
+            ]); 
+          });
+          
         });
       setInitialized(true);
     }
-  });
-
+  },[initialized]);
   return rows && (
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat (g)</TableCell>
-            <TableCell align="right">Carbs (g)</TableCell>
-            <TableCell align="right">Protein (g)</TableCell>
+           <TableCell align="right">IATA_IDA1</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">WMO_ID</TableCell>
+            <TableCell align="right">MSC_ID</TableCell>
+            <TableCell align="right">Latitude</TableCell>
+            <TableCell align="right">Longitude</TableCell>
+            <TableCell align="right">Elevation</TableCell>
+            <TableCell align="right">Data_Provider</TableCell>
+            <TableCell align="right">Dataset/N</TableCell>
+            <TableCell align="right">AUTO/MA</TableCell>
+            <TableCell align="right">Province/Territory</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
+
           {rows.map(row => (
-            <TableRow key={row.id}>
+          <TableRow>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.iATA_IDA1}</TableCell>
+              <TableCell align="right">{row.name}</TableCell>
+              <TableCell align="right">{row.wMO_ID}</TableCell>
+              <TableCell align="right">{row.mSC_ID}</TableCell>
+              <TableCell align="right">{row.latitude}</TableCell>
+              <TableCell align="right">{row.longitude}</TableCell>
+              <TableCell align="right">{row.elevation}</TableCell>
+              <TableCell align="right">{row.data_Provider}</TableCell>
+              <TableCell align="right">{row.dataset_N}</TableCell>
+              <TableCell align="right">{row.aUTO_MA}</TableCell>
+              <TableCell align="right">{row.province_Territory}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
