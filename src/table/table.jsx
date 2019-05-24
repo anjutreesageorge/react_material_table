@@ -43,15 +43,13 @@ function SimpleTable(props) {
         .then(({ data }) => {
           // eslint-disable-next-line no-console
           console.log('>>>>>>>.', data);
-          data.forEach(element => {
-            setRows([
-              createData(element.iATA_IDA1,element.name,element.wMO_ID,element.mSC_ID,element.latitude,element.longitude,element.elevation,element.data_Provider,
-                element.dataset_N,element.aUTO_MA,element.province_Territory)
-              
-            ]); 
+          //createData(element.iATA_IDA1,element.name,element.wMO_ID,element.mSC_ID,element.latitude,element.longitude,element.elevation,element.data_Provider,
+                //element.dataset_N,element.aUTO_MA,element.province_Territory)
+          //data.forEach(element => {
+            setRows(data); 
           });
           
-        });
+        //});
       setInitialized(true);
     }
   },[initialized]);
@@ -75,7 +73,7 @@ function SimpleTable(props) {
         </TableHead>
         <TableBody>
 
-          {rows.map(row => (
+          {data.map(row => (
           <TableRow>
               <TableCell component="th" scope="row">
                 {row.name}
